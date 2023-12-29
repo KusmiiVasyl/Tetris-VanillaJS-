@@ -1,7 +1,3 @@
-// 1. Показувати фігуру над екраном rowTetro = -2
-// 2. Створити UI для розрахунку балів
-// 3. Реалізувати самостійний рух
-
 const PLAYFIELD_COLUMNS = 10
 const PLAYFIELD_ROWS = 20
 const speedDown = 1000
@@ -50,20 +46,24 @@ let playfield
 let tetromino
 let stopAutoDownFigure
 let score = 0
+let isPaused = false
+let isGameOver = false
+let isPause = false
+const tetrisField = document.querySelector('.tetris')
+const gameOverBlock = document.querySelector('.game-over')
+const pauseBlock = document.querySelector('.pause-block')
+const btnRestart = document.querySelector('.restart')
 
 // Invoke logic
 document.addEventListener('keydown', onKeyDown)
-generatePlayfield()
-generateTetromino()
-drawPlayField()
-const cells = document.querySelectorAll('.tetris div')
-drawTetromino()
+startGame()
+let cells = document.querySelectorAll('.tetris div')
 // ---------------
 
 function generatePlayfield() {
   for (let i = 0; i < PLAYFIELD_ROWS * PLAYFIELD_COLUMNS; i++) {
     const div = document.createElement('div')
-    document.querySelector('.tetris').append(div)
+    tetrisField.append(div)
   }
 
   playfield = new Array(PLAYFIELD_ROWS)
@@ -125,7 +125,7 @@ function drawTetromino() {
 
   for (let row = 0; row < tetrominoMatrixSize; row++) {
     for (let col = 0; col < tetrominoMatrixSize; col++) {
-      if (tetromino.row + row < 0) continue
+      if (isOutsideTopBoard(row)) continue
       if (!tetromino.matrix[row][col]) continue
       const cellIndex = convertPositionToIndex(
         tetromino.row + row,
@@ -145,19 +145,29 @@ function draw() {
 }
 
 function onKeyDown(event) {
-  switch (event.key) {
-    case 'ArrowUp':
-      rotateTetromino()
-      break
-    case 'ArrowDown':
-      moveTetrominoDown()
-      break
-    case 'ArrowLeft':
-      moveTetrominoLeft()
-      break
-    case 'ArrowRight':
-      moveTetrominoRight()
-      break
+  if (event.key == 'p') {
+    togglePauseGame()
+    isPause = !isPause
+    pauseBlock.style.visibility = isPause ? 'visible' : 'hidden'
+  }
+  if (!isPaused) {
+    switch (event.key) {
+      case 'ArrowUp':
+        rotateTetromino()
+        break
+      case 'ArrowDown':
+        moveTetrominoDown()
+        break
+      case 'ArrowLeft':
+        moveTetrominoLeft()
+        break
+      case 'ArrowRight':
+        moveTetrominoRight()
+        break
+      case ' ':
+        dropTetrominoDown()
+        break
+    }
   }
   draw()
 }
@@ -167,6 +177,9 @@ function moveTetrominoDown() {
   if (isValid()) {
     tetromino.row -= 1
     placeTetromino()
+  }
+  if (isGameOver) {
+    gameOver()
   }
 }
 
@@ -189,7 +202,10 @@ function placeTetromino() {
   for (let row = 0; row < matrixSize; row++) {
     for (let col = 0; col < matrixSize; col++) {
       if (!tetromino.matrix[row][col]) continue
-      if (gameOver(!playfield[tetromino.row + row])) return
+      if (isOutsideTopBoard(row)) {
+        isGameOver = true
+        return
+      }
       playfield[tetromino.row + row][tetromino.column + col] =
         tetromino.matrix[row][col]
     }
@@ -303,4 +319,40 @@ function countScore(countRowsToDelete) {
 function gameOver(isGameOver) {
   clearInterval(stopAutoDownFigure)
   return isGameOver
+}
+
+function togglePauseGame() {
+  isPaused = !isPaused
+  isPaused ? clearInterval(stopAutoDownFigure) : startAutoDownFigure()
+}
+
+function dropTetrominoDown() {
+  while (!isValid()) {
+    tetromino.row++
+  }
+  tetromino.row--
+}
+
+function gameOver() {
+  clearInterval(stopAutoDownFigure)
+  gameOverBlock.style.visibility = 'visible'
+}
+
+function isOutsideTopBoard(row) {
+  return tetromino.row + row < 0
+}
+
+btnRestart.addEventListener('click', () => {
+  gameOverBlock.style.visibility = 'hidden'
+  isGameOver = false
+  score.textContent = 0
+
+  tetrisField.innerHTML = ''
+  startGame()
+  cells = document.querySelectorAll('.tetris div')
+})
+
+function startGame() {
+  generatePlayfield()
+  generateTetromino()
 }

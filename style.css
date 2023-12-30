@@ -106,6 +106,59 @@ body {
 /* #endregion */
 
 /* #region block-keyboard-play */
+.keyboard-play {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 20px;
+}
+
+/* #region button restart */
+.restart-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #781301; /* Border color */
+  color: #781301; /* Text color */
+  background-color: #ee6f61; /* Background color */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+
+  /* Hover effect */
+  &:hover {
+    background-color: #781301; /* Hover background color */
+    color: #ee6f61; /* Hover text color */
+  }
+}
+
+/* Optional: Add additional styling for different states (e.g., active) */
+.restart-btn:active {
+  background-color: #2980b9; /* Active background color */
+  border-color: #2980b9; /* Active border color */
+  color: #fff; /* Active text color */
+}
+/* #endregion */
+
+.block-rotate-down {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 40px 10px 5px 15px;
+}
+
+.quick-down img{
+  border-radius: 15px;
+}
+
+.rotate img {
+  background-color: rgb(208, 247, 208);
+  border-radius: 50%;
+}
+
 .block-arrow {
   display: flex;
   flex-direction: row;

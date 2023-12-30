@@ -135,10 +135,9 @@ body {
   }
 }
 
-/* Optional: Add additional styling for different states (e.g., active) */
 .restart-btn:active {
-  background-color: #2980b9; /* Active background color */
-  border-color: #2980b9; /* Active border color */
+  background-color: rgb(114, 58, 2); /* Active background color */
+  border-color: rgb(114, 58, 2); /* Active border color */
   color: #fff; /* Active text color */
 }
 /* #endregion */
@@ -150,7 +149,7 @@ body {
   margin: 40px 10px 5px 15px;
 }
 
-.quick-down img{
+.quick-down img {
   border-radius: 15px;
 }
 
@@ -170,6 +169,22 @@ body {
 .btn-down img {
   background-color: rgb(254, 131, 8);
   border-radius: 15px;
+}
+
+.quick-down img,
+.rotate img,
+.btn-left img,
+.btn-right img,
+.btn-down img {
+  border: 2px solid rgb(44, 44, 44);
+
+  &:hover {
+    border: 2px solid rgb(240, 250, 190);
+  }
+
+  &:active {
+    border: 2px solid rgb(0, 122, 0);
+  }
 }
 /* #endregion */
 

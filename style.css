@@ -65,6 +65,7 @@ body {
   justify-content: center;
   align-items: center;
   visibility: hidden;
+  z-index: 50;
 }
 
 .try-again {
@@ -110,47 +111,70 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 20px;
+  padding-left: 2vh;
 }
 
-/* #region button restart */
+/* #region button restart, pause */
+.pause-btn,
 .restart-btn {
   display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
+  position: relative;
+  width: 10vh;
+  font-size: 2vh;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid #781301; /* Border color */
-  color: #781301; /* Text color */
-  background-color: #ee6f61; /* Background color */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  border-radius: 1vh;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-  /* Hover effect */
+.pause-btn {
+  margin-top: 1vh;
+  border: 0.3vh solid #004e96;
+  color: #004e96;
+  background-color: #6db8fd;
+  z-index: 100;
+
   &:hover {
-    background-color: #781301; /* Hover background color */
-    color: #ee6f61; /* Hover text color */
+    background-color: #004e96;
+    color: #6db8fd;
+  }
+
+  &:active {
+    background-color: rgb(114, 58, 2);
+    border-color: rgb(114, 58, 2);
+    color: #fff;
   }
 }
 
-.restart-btn:active {
-  background-color: rgb(114, 58, 2); /* Active background color */
-  border-color: rgb(114, 58, 2); /* Active border color */
-  color: #fff; /* Active text color */
+.restart-btn {
+  border: 0.3vh solid #781301;
+  color: #781301;
+  background-color: #ee6f61;
+
+  &:hover {
+    background-color: #781301;
+    color: #ee6f61;
+  }
+
+  &:active {
+    background-color: rgb(114, 58, 2);
+    border-color: rgb(114, 58, 2);
+    color: #fff;
+  }
 }
 /* #endregion */
 
 .block-rotate-down {
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  margin: 40px 10px 5px 15px;
+  gap: 2vh;
+  margin: 10vh 10vh 1vh 2vh;
 }
 
 .quick-down img {
-  border-radius: 15px;
+  border-radius: 2vh;
 }
 
 .rotate img {
@@ -161,14 +185,14 @@ body {
 .block-arrow {
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  gap: 0.5vh;
 }
 
 .btn-left img,
 .btn-right img,
 .btn-down img {
   background-color: rgb(254, 131, 8);
-  border-radius: 15px;
+  border-radius: 2vh;
 }
 
 .quick-down img,
@@ -176,14 +200,16 @@ body {
 .btn-left img,
 .btn-right img,
 .btn-down img {
-  border: 2px solid rgb(44, 44, 44);
+  width: 5vh;
+  border: 0.3vh solid rgb(44, 44, 44);
+  cursor: pointer;
 
   &:hover {
-    border: 2px solid rgb(240, 250, 190);
+    border: 0.3vh solid rgb(240, 250, 190);
   }
 
   &:active {
-    border: 2px solid rgb(0, 122, 0);
+    border: 0.3vh solid rgb(0, 122, 0);
   }
 }
 /* #endregion */

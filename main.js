@@ -379,4 +379,9 @@ function handleKeyboardPlay() {
   document.querySelector('.btn-right img').addEventListener('click', () => {
     onKeyDown({ key: 'ArrowRight' })
   })
+  document.querySelector('.pause-btn').addEventListener('click', () => {
+    const pauseBtn = document.querySelector('.pause-btn')
+    onKeyDown({ key: 'p' })
+    pauseBtn.style.zIndex = isPause ? '100' : '30'
+  })
 }

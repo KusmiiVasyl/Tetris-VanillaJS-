@@ -60,6 +60,7 @@ const scoreTotal = document.querySelector('.total-score')
 // Invoke logic
 document.addEventListener('keydown', onKeyDown)
 startGame()
+handleKeyboardPlay()
 // ---------------
 
 function generatePlayfield() {
@@ -360,4 +361,22 @@ function startGame() {
   generatePlayfield()
   generateTetromino()
   cells = document.querySelectorAll('.tetris div')
+}
+
+function handleKeyboardPlay() {
+  document.querySelector('.quick-down img').addEventListener('click', () => {
+    onKeyDown({ key: ' ' })
+  })
+  document.querySelector('.rotate img').addEventListener('click', () => {
+    onKeyDown({ key: 'ArrowUp' })
+  })
+  document.querySelector('.btn-left img').addEventListener('click', () => {
+    onKeyDown({ key: 'ArrowLeft' })
+  })
+  document.querySelector('.btn-down img').addEventListener('click', () => {
+    onKeyDown({ key: 'ArrowDown' })
+  })
+  document.querySelector('.btn-right img').addEventListener('click', () => {
+    onKeyDown({ key: 'ArrowRight' })
+  })
 }

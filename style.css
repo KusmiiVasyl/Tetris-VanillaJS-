@@ -9,6 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .game {
@@ -18,15 +19,23 @@ body {
 
 .score {
   color: white;
-  padding-block: 10px;
+  text-align: end;
+}
+
+.keyboard-play,
+.score {
+  width: min(20vw, 20vw);
+  padding: 10px;
+  font-size: 2.8vh;
+  text-wrap: nowrap;
 }
 
 .tetris {
   background-color: rgb(73, 37, 2);
   padding: 0.5vh;
-  border: 20px solid rgb(136, 70, 4);
-  border-top: 1px solid rgb(136, 70, 4);
-  border-radius: 0.5vh 0.5vh 4vh 4vh;
+  border: 1vh solid rgb(136, 70, 4);
+  border-top: 0.2vh solid rgb(136, 70, 4);
+  border-radius: 0.5vh 0.5vh 1vh 1vh;
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(20, auto);
@@ -40,10 +49,13 @@ body {
   border-radius: 0.3vh;
 }
 
-.game-over,
-.pause-block {
+.pause-block,
+.game-over {
   position: fixed;
-  background-color: rgb(41, 41, 41, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+  background-color: rgb(41, 41, 41, 0.7);
   width: 100%;
   height: 100%;
   display: flex;
@@ -52,31 +64,57 @@ body {
   visibility: hidden;
 }
 
-.restart {
-  padding: 15px 50px;
-  border: none;
-  border-radius: 15px;
-  background-color: rgb(175, 80, 1);
-  color: rgb(68, 31, 0);
+.try-again {
+  color: rgb(146, 220, 55);
   cursor: pointer;
 }
 
-.pause-text, 
-.restart {
-  font-size: 16px;
+.pause-text,
+.try-again {
+  font-size: 3vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-transform: uppercase;
   font-weight: bold;
-  
+}
+
+.text-game-over {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 5vh;
+  color: red;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.score-result {
+  font-size: 3vh;
+  color: antiquewhite;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.try-again:hover {
+  color: rgb(180, 251, 92);
 }
 
 .pause-text {
   color: rgb(249, 140, 50);
 }
 
+.block-arrow {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
 
+.btn-left img,
+.btn-right img,
+.btn-down img {
+  background-color: rgb(254, 131, 8);
+  border-radius: 15px;
+}
 
-@media (max-width: 1100px) {
+/* @media (max-width: 1100px) {
   .game {
     flex-direction: column;
   }
@@ -89,4 +127,4 @@ body {
   .total-score {
     margin-left: 10px;
   }
-}
+} */

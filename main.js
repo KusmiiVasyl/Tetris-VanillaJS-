@@ -49,15 +49,17 @@ let score = 0
 let isPaused = false
 let isGameOver = false
 let isPause = false
+let cells
 const tetrisField = document.querySelector('.tetris')
 const gameOverBlock = document.querySelector('.game-over')
 const pauseBlock = document.querySelector('.pause-block')
-const btnRestart = document.querySelector('.restart')
+const btnRestart = document.querySelector('.try-again')
+const scoreResult = document.querySelector('.score-result-text')
+const scoreTotal = document.querySelector('.total-score')
 
 // Invoke logic
 document.addEventListener('keydown', onKeyDown)
 startGame()
-let cells = document.querySelectorAll('.tetris div')
 // ---------------
 
 function generatePlayfield() {
@@ -145,7 +147,7 @@ function draw() {
 }
 
 function onKeyDown(event) {
-  if (event.key == 'p') {
+  if (event.key == 'p' || event.key == 'P') {
     togglePauseGame()
     isPause = !isPause
     pauseBlock.style.visibility = isPause ? 'visible' : 'hidden'
@@ -313,7 +315,7 @@ function countScore(countRowsToDelete) {
       score += 100
       break
   }
-  document.querySelector('.total-score').innerHTML = score
+  scoreTotal.innerHTML = score
 }
 
 function gameOver(isGameOver) {
@@ -335,6 +337,9 @@ function dropTetrominoDown() {
 
 function gameOver() {
   clearInterval(stopAutoDownFigure)
+  scoreResult.textContent = score
+  score = 0
+  scoreTotal.innerHTML = score
   gameOverBlock.style.visibility = 'visible'
 }
 
@@ -345,7 +350,6 @@ function isOutsideTopBoard(row) {
 btnRestart.addEventListener('click', () => {
   gameOverBlock.style.visibility = 'hidden'
   isGameOver = false
-  score.textContent = 0
 
   tetrisField.innerHTML = ''
   startGame()
@@ -355,4 +359,5 @@ btnRestart.addEventListener('click', () => {
 function startGame() {
   generatePlayfield()
   generateTetromino()
+  cells = document.querySelectorAll('.tetris div')
 }

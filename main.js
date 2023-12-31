@@ -50,12 +50,17 @@ let isPaused = false
 let isGameOver = false
 let isPause = false
 let cells
+const nextFigure = {
+  nameIndex: getRandomTetrominoNamesIndex(),
+  color: generateRandomColorRGB(),
+}
 const tetrisField = document.querySelector('.tetris')
 const gameOverBlock = document.querySelector('.game-over')
 const pauseBlock = document.querySelector('.pause-block')
 const btnRestart = document.querySelector('.try-again')
 const scoreResult = document.querySelector('.score-result-text')
 const scoreTotal = document.querySelector('.total-score')
+const nextFigureField = document.querySelector('.next-figure-field')
 
 // Invoke logic
 document.addEventListener('keydown', onKeyDown)
@@ -79,7 +84,7 @@ function getRandomTetrominoNamesIndex() {
 }
 
 function generateTetromino() {
-  const nameTetro = TETROMINO_NAMES[getRandomTetrominoNamesIndex()]
+  const nameTetro = TETROMINO_NAMES[nextFigure.nameIndex]
   const matrixTetro = TETROMINOES[nameTetro]
   const columnTetro = Math.floor(
     PLAYFIELD_COLUMNS / 2 - TETROMINOES[nameTetro].length / 2
@@ -91,10 +96,13 @@ function generateTetromino() {
     matrix: matrixTetro,
     column: columnTetro,
     row: rowTetro,
-    color: generateRandomColorRGB(),
+    color: nextFigure.color,
   }
   clearInterval(stopAutoDownFigure)
   startAutoDownFigure()
+  nextFigure.nameIndex = getRandomTetrominoNamesIndex()
+  nextFigure.color = generateRandomColorRGB()
+  drawNextFigure()
 }
 
 function convertPositionToIndex(row, col) {
@@ -139,6 +147,22 @@ function drawTetromino() {
   }
 }
 
+function drawNextFigure() {
+  const figure = TETROMINOES[TETROMINO_NAMES[nextFigure.nameIndex]]
+  nextFigureField.innerHTML = ''
+  nextFigureField.style.gridTemplateColumns = `repeat(${figure.length} , auto)`
+  nextFigureField.style.gridTemplateRows = `repeat(${figure.length} , auto)`
+  
+  for (let i = 0; i < figure.length; i++) {
+    for (let j = 0; j < figure.length; j++) {
+      const elem = document.createElement('div')
+
+      if (figure[i][j]) elem.style.backgroundColor = nextFigure.color
+      nextFigureField.appendChild(elem)
+    }
+  }
+}
+
 function draw() {
   cells.forEach((cell) => {
     cell.removeAttribute('style')
@@ -153,7 +177,7 @@ function onKeyDown(event) {
     isPause = !isPause
     pauseBlock.style.visibility = isPause ? 'visible' : 'hidden'
   }
-  if (!isPaused) {
+  if (!isPaused && !isGameOver) {
     switch (event.key) {
       case 'ArrowUp':
         rotateTetromino()
@@ -338,6 +362,7 @@ function dropTetrominoDown() {
 
 function gameOver() {
   clearInterval(stopAutoDownFigure)
+  isGameOver = true
   scoreResult.textContent = score
   score = 0
   scoreTotal.innerHTML = score
@@ -358,6 +383,7 @@ btnRestart.addEventListener('click', () => {
 })
 
 function startGame() {
+  isGameOver = false
   generatePlayfield()
   generateTetromino()
   cells = document.querySelectorAll('.tetris div')
@@ -388,6 +414,7 @@ function handleKeyboardPlay() {
     const confirmRestartBlock = document.querySelector('.confirm-restart-block')
     const btnRestartYes = document.querySelector('.btn-restart-yes')
     const btnRestartNo = document.querySelector('.btn-restart-no')
+    isGameOver = true
 
     clearInterval(stopAutoDownFigure)
     confirmRestartBlock.style.visibility = 'visible'
@@ -397,6 +424,7 @@ function handleKeyboardPlay() {
 
     const handleBtnRestartNoClick = () => {
       confirmRestartBlock.style.visibility = 'hidden'
+      isGameOver = false
       startAutoDownFigure()
       btnRestartNo.removeEventListener('click', handleBtnRestartNoClick)
     }

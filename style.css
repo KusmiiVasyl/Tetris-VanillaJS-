@@ -51,9 +51,10 @@ body {
 }
 /* #endregion */
 
-/* #region pause & game over */
+/* #region pause, game over, restart */
 .pause-block,
-.game-over {
+.game-over,
+.confirm-restart-block {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -74,7 +75,8 @@ body {
 }
 
 .pause-text,
-.try-again {
+.try-again,
+.confirm-restart-block {
   font-size: 3vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-transform: uppercase;
@@ -101,9 +103,46 @@ body {
   color: rgb(180, 251, 92);
 }
 
-.pause-text {
+.pause-text,
+.confirm-restart-block {
   color: rgb(249, 140, 50);
+  text-align: center;
 }
+
+.btn-restart-yes,
+.btn-restart-no {
+  width: 10vh;
+  border-radius: 1vh;
+  font-size: 2vh;
+  padding: 0.5vh;
+}
+
+.btn-restart-yes {
+  background-color: green;
+  border: 0.2vh solid greenyellow;
+  color: greenyellow;
+  cursor: pointer;
+
+  &:hover {
+    border-color: green;
+    color: green;
+    background-color: greenyellow;
+  }
+}
+
+.btn-restart-no {
+  background-color: rgb(194, 0, 0);
+  border: 0.2vh solid rgb(255, 170, 170);
+  color: rgb(255, 170, 170);
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgb(194, 0, 0);
+    color: rgb(194, 0, 0);
+    background-color: rgb(255, 170, 170);
+  }
+}
+
 /* #endregion */
 
 /* #region block-keyboard-play */

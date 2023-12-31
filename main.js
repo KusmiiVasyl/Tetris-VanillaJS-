@@ -384,4 +384,34 @@ function handleKeyboardPlay() {
     onKeyDown({ key: 'p' })
     pauseBtn.style.zIndex = isPause ? '100' : '30'
   })
+  document.querySelector('.restart-btn').addEventListener('click', () => {
+    const confirmRestartBlock = document.querySelector('.confirm-restart-block')
+    const btnRestartYes = document.querySelector('.btn-restart-yes')
+    const btnRestartNo = document.querySelector('.btn-restart-no')
+
+    clearInterval(stopAutoDownFigure)
+    confirmRestartBlock.style.visibility = 'visible'
+    confirmRestartBlock.style.zIndex = 150
+
+    btnRestartYes.addEventListener('click', () => {})
+
+    const handleBtnRestartNoClick = () => {
+      confirmRestartBlock.style.visibility = 'hidden'
+      startAutoDownFigure()
+      btnRestartNo.removeEventListener('click', handleBtnRestartNoClick)
+    }
+
+    const handleBtnRestartYesClick = () => {
+      confirmRestartBlock.style.visibility = 'hidden'
+      score = 0
+      scoreTotal.textContent = score
+      tetrisField.innerHTML = ''
+      startGame()
+      cells = document.querySelectorAll('.tetris div')
+      btnRestartYes.removeEventListener('click', handleBtnRestartYesClick)
+    }
+
+    btnRestartYes.addEventListener('click', handleBtnRestartYesClick)
+    btnRestartNo.addEventListener('click', handleBtnRestartNoClick)
+  })
 }
